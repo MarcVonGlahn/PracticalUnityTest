@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 811347694c8dcd44282dfc22427e5ca4, type: 3}
   m_Name: SO_PlayerAttributes
   m_EditorClassIdentifier: 
+  playerHealth: 100
   horizontalMovementSpeed: 50
   horizontalMovementRange: {x: -80, y: 80}

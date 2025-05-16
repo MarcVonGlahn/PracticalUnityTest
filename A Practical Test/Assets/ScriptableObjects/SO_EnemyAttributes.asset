@@ -13,7 +13,11 @@ MonoBehaviour:
   m_Name: SO_EnemyAttributes
   m_EditorClassIdentifier: 
   managerWorldZOffset: 25
+  managerHorizontalSpeed: 5
+  managerVerticalShift: 5
+  worldHorizontalRange: {x: -80, y: 80}
   totalRows: 4
   totalColumns: 14
   xOffset: 10
   yOffset: 5
+  enemyObjectShootIntervallRange: {x: 2, y: 30}

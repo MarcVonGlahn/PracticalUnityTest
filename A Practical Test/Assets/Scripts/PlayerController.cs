@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -77,6 +78,24 @@ public class PlayerController : MonoBehaviour
     }
 
 
+    public void TakeDamage(float damageAmount)
+    {
+        playerAttributes.PlayerHealth -= damageAmount;
+
+        if(playerAttributes.PlayerHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+
+    private void RestartGame()
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(currentSceneName);
+    }
+
+
     #region InputActionEvents
     private void FireInputAction_Performed(InputAction.CallbackContext obj)
     {
@@ -88,8 +107,7 @@ public class PlayerController : MonoBehaviour
 
     private void RestartInputAction_Performed(InputAction.CallbackContext obj)
     {
-        string currentSceneName = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(currentSceneName);
+        RestartGame();
     }
 
 
@@ -98,4 +116,12 @@ public class PlayerController : MonoBehaviour
         Application.Quit();
     }
     #endregion
+
+
+    private IEnumerator RestartGameRoutine()
+    {
+        yield return new WaitForSeconds(1.0f);
+
+        RestartGame();
+    }
 }

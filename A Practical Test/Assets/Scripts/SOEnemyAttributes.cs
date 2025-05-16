@@ -15,6 +15,9 @@ public class SOEnemyAttributes : ScriptableObject
     [Space]
     [SerializeField] private float xOffset = 20.0f;
     [SerializeField] private float yOffset = 10.0f;
+    [Space]
+    [SerializeField] private Vector2 enemyObjectShootIntervallRange = new Vector2(2.0f, 10.0f);
+    [SerializeField] private float enemyProjectileDamage = 10.0f;
 
 
     public float ManagerWorldZOffset { get => managerWorldZOffset; }
@@ -22,9 +25,13 @@ public class SOEnemyAttributes : ScriptableObject
     public float ManagerVerticalShift { get => managerVerticalShift; }
     public Vector2 WorldHorizontalRange { get => worldHorizontalRange; }
 
+
     public int TotalRows { get => totalRows; }
     public int TotalColumns { get => totalColumns; }
 
     public float XOffset { get => xOffset; }
     public float YOffset { get => yOffset; }
+
+    public Vector2 EnemyObjectShootIntervallRange { get => enemyObjectShootIntervallRange; }
+    public float EnemyProjectileDamage { get => enemyProjectileDamage; }
 }

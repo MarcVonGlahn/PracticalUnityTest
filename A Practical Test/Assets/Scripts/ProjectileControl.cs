@@ -7,7 +7,8 @@ public class ProjectileControl : MonoBehaviour
     private Vector3 _velocity;
 
     private float _age;
-    private float _lifeTime = 0-0f;
+    private float _lifeTime = 0.0f;
+    private float _projectileDamage = 0.0f;
 
     public bool IsShotByPlayer { get => _isShotByPlayer; }
 
@@ -16,10 +17,11 @@ public class ProjectileControl : MonoBehaviour
         _age = 0.0f;
     }
 
-    public void Initialize(bool isShotByPlayer, Vector3 velocity, float lifetime = 5.0f)
+    public void Initialize(bool isShotByPlayer, Vector3 velocity, float projectileDamage = 0.0f, float lifetime = 5.0f)
     {
         _isShotByPlayer = isShotByPlayer;
         _velocity = velocity;
+        _projectileDamage = projectileDamage;
 
         _lifeTime = lifetime;
     }
@@ -38,23 +40,24 @@ public class ProjectileControl : MonoBehaviour
         transform.position += _velocity * Time.deltaTime;
     }
 
-
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if(collision.gameObject.GetComponentInParent<PlayerController>())
+        if (other.gameObject.GetComponentInParent<PlayerController>())
         {
             if (_isShotByPlayer)
                 return;
 
-            Debug.Log("Deal Damage to player, then destroy");
+            other.gameObject.GetComponentInParent<PlayerController>().TakeDamage(_projectileDamage);
+
             Destroy(gameObject);
         }
-        else if(collision.gameObject.GetComponent<EnemyController>())
+        else if (other.gameObject.GetComponent<EnemyController>())
         {
             if (!_isShotByPlayer)
                 return;
 
-            Debug.Log("Hit Enemy, so destroy");
+            other.gameObject.GetComponent<EnemyController>().KillEnemy();
+
             Destroy(gameObject);
         }
     }
