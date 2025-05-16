@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -11,6 +12,9 @@ public class PlayerController : MonoBehaviour
     [Header("Projectile")]
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Transform projectileSpawn;
+
+    [Header("UI")]
+    [SerializeField] private TextMeshProUGUI playerHealthText;
 
 
     private Vector3 _initialPosition;
@@ -45,6 +49,8 @@ public class PlayerController : MonoBehaviour
 
         _playerControlActions.Player.QuitGame.performed += QuitGameInputAction_Performed;
         _playerControlActions.Player.QuitGame.Enable();
+
+        playerAttributes.PlayerHealth = playerAttributes.MaxPlayerHealth;
     }
 
     
@@ -82,8 +88,14 @@ public class PlayerController : MonoBehaviour
     {
         playerAttributes.PlayerHealth -= damageAmount;
 
-        if(playerAttributes.PlayerHealth <= 0)
+        if (playerHealthText != null)
+            playerHealthText.text = $"Player Health: {Mathf.Ceil(playerAttributes.PlayerHealth)}";
+
+        if (playerAttributes.PlayerHealth <= 0)
         {
+            if (playerHealthText != null)
+                playerHealthText.text = $"Player DIED!";
+
             Destroy(gameObject);
         }
     }
