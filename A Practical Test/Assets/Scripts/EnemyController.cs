@@ -4,13 +4,12 @@ public class EnemyController : MonoBehaviour
 {
     [SerializeField] private GameObject projectilePrefab;
 
-    private bool _isAlive = true;
-
     private float _shootingTimer = 0.0f;
     private float _shootIntervall = 0.0f;
     private float _projectileDamage = 0.0f;
 
     private Vector2 _shootIntervallRange;
+
 
     public void InitializeEnemy(float projectileDamage, Vector2 shootIntervallRange)
     {

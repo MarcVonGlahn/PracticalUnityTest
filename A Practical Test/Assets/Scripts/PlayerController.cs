@@ -128,12 +128,4 @@ public class PlayerController : MonoBehaviour
         Application.Quit();
     }
     #endregion
-
-
-    private IEnumerator RestartGameRoutine()
-    {
-        yield return new WaitForSeconds(1.0f);
-
-        RestartGame();
-    }
 }
