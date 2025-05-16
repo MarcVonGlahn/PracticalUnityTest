@@ -7,6 +7,7 @@ public class SOEnemyAttributes : ScriptableObject
     [SerializeField] private float managerWorldZOffset = 40.0f;
     [SerializeField] private float managerHorizontalSpeed = 5.0f;
     [SerializeField] private float managerVerticalShift = 5.0f;
+    [SerializeField] private Vector2 worldHorizontalRange = new Vector2(-80.0f, 80.0f);
 
     [Header("Enemy Spawning Attributes")]
     [SerializeField] private int totalRows = 4;
@@ -19,6 +20,7 @@ public class SOEnemyAttributes : ScriptableObject
     public float ManagerWorldZOffset { get => managerWorldZOffset; }
     public float ManagerHorizontalSpeed { get => managerHorizontalSpeed; }
     public float ManagerVerticalShift { get => managerVerticalShift; }
+    public Vector2 WorldHorizontalRange { get => worldHorizontalRange; }
 
     public int TotalRows { get => totalRows; }
     public int TotalColumns { get => totalColumns; }

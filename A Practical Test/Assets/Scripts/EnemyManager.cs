@@ -6,6 +6,14 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private SOEnemyAttributes enemyAttributes;
     [SerializeField] private GameObject enemyPrefab;
 
+    private bool _isMovingRight;
+
+    private Vector2 _horizontalMovementRange;
+
+    private Vector3 _startPosition;
+    private Vector3 _currentMovement;
+
+
 
     private void Start()
     {
@@ -16,10 +24,20 @@ public class EnemyManager : MonoBehaviour
 
     private void InitializeManager()
     {
-        transform.position = new Vector3(
+        _isMovingRight = true;
+
+
+        _startPosition = new Vector3(
             -(enemyAttributes.XOffset * enemyAttributes.TotalColumns / 2),
             0.0f,
             enemyAttributes.ManagerWorldZOffset);
+        transform.position = _startPosition;
+
+
+        float distanceToEdge = Mathf.Abs(enemyAttributes.WorldHorizontalRange.x - _startPosition.x);
+        _horizontalMovementRange = new Vector2(_startPosition.x - distanceToEdge, _startPosition.x + distanceToEdge);
+
+        _currentMovement = new Vector3(enemyAttributes.ManagerHorizontalSpeed, 0, 0);
     }
 
 
@@ -31,7 +49,7 @@ public class EnemyManager : MonoBehaviour
             {
                 GameObject newEnemy = Instantiate(enemyPrefab, transform);
 
-                newEnemy.transform.localPosition = new Vector3(enemyAttributes.XOffset * i, 0, enemyAttributes.YOffset * j);
+                newEnemy.transform.localPosition = new Vector3(enemyAttributes.XOffset * i + enemyAttributes.XOffset / 2, 0, enemyAttributes.YOffset * j);
             }
         }
     }
@@ -39,6 +57,21 @@ public class EnemyManager : MonoBehaviour
 
     private void Update()
     {
-        
+        transform.position += _currentMovement * Time.deltaTime;
+
+        if (transform.position.x <= _horizontalMovementRange.x || transform.position.x >= _horizontalMovementRange.y)
+        {
+            ShiftEnemies();
+        }
+    }
+
+
+    private void ShiftEnemies()
+    {
+        _isMovingRight = !_isMovingRight;
+
+        _currentMovement.x = _isMovingRight ? enemyAttributes.ManagerHorizontalSpeed : -(enemyAttributes.ManagerHorizontalSpeed);
+
+        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - enemyAttributes.ManagerVerticalShift);
     }
 }
