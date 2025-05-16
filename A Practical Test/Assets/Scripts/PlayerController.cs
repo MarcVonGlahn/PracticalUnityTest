@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Attributes")]
     [SerializeField] private SOPlayerAttributes playerAttributes;
 
     [Header("Projectile")]
@@ -11,11 +12,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform projectileSpawn;
 
 
+    private Vector3 _initialPosition;
+
     private PlayerControl_Actions _playerControlActions;
 
     private InputAction _moveInput;
 
-    private Vector3 _initialPosition;
 
 
     private void Awake()

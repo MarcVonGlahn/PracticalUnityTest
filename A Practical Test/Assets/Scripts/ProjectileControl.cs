@@ -9,6 +9,8 @@ public class ProjectileControl : MonoBehaviour
     private float _age;
     private float _lifeTime = 0-0f;
 
+    public bool IsShotByPlayer { get => _isShotByPlayer; }
+
     private void Start()
     {
         _age = 0.0f;
@@ -34,5 +36,26 @@ public class ProjectileControl : MonoBehaviour
         }
 
         transform.position += _velocity * Time.deltaTime;
+    }
+
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.GetComponentInParent<PlayerController>())
+        {
+            if (_isShotByPlayer)
+                return;
+
+            Debug.Log("Deal Damage to player, then destroy");
+            Destroy(gameObject);
+        }
+        else if(collision.gameObject.GetComponent<EnemyController>())
+        {
+            if (!_isShotByPlayer)
+                return;
+
+            Debug.Log("Hit Enemy, so destroy");
+            Destroy(gameObject);
+        }
     }
 }
